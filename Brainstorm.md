@@ -1,16 +1,47 @@
 # Objective
 
 The objective of this project is to rewrite an existing python implementation of
-q-sum and buy-and-hold trading methodologies in Java.
+([cusum](https://algofin.substack.com/p/algorithmic-trading-models-cumulative) as in cumulative sum?) and buy-and-hold trading methodologies in Java.
 This implementation will also utilize an api to query fresh trading data.
 This implementation is will also allow for the user to issue commands.
+
+A similar strategy to consider is [rubber banding](https://www.quantifiedstrategies.com/rubber-band-trading-strategy/).
+
+These investment strategies will be back tested to determine optimality.
+> Backtesting is the general method for seeing how well a strategy or model would have done ex-post.
+> Backtesting assesses the viability of a trading strategy by discovering how it would play out using historical data.
+> If backtesting works, traders and analysts may have the confidence to employ it going forward.
+
+Possibility of adding heuristics, such as:  
+stock has been split -> buy, etc.
+
+Notes:
+1. For information on quantitative trading see [this](https://www.investopedia.com/terms/q/quantitative-trading.asp)
+2. For information on stock analysis see [this](https://www.investopedia.com/terms/s/stock-analysis.asp)
+
+
 
 # Approach
 
 User Stories
-1. Users can create query data in regards to a specific stock price (CLI or GUI?)
-   1.
+1. Users can create query data in regards to a specific stock
+   1. Price
+   2. Volume
+   3. Total Value
+   4. etc.
 2. users can query an analysis
+   1. mean-value
+   2. mean-high
+   3. etc.
+3. User can check whether a stock is ranging or trending
+   1. ranging - the stock value is oscilating within a fixed range
+   2. trending - the stock value is rising are falling significantly over an
+   extended period of time.
+
+
+Functional Requirements
+1. System should support simple caching of information to reduce network load and api calls
+2. 
 
 # Tools and Technologies
 ## Libraries

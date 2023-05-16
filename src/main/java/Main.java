@@ -39,6 +39,16 @@ public class Main {
         Table t = Table.create("temp", a, b);
         System.out.printf(t.printAll());
 
+        double[] x = {1, 2, 3, 4, 5, 6};
+        double[] y = {0, 1, 6, 14, 25, 39};
+        String[] labels = {"a", "b", "c", "d", "e", "f"};
+
+        ScatterTrace trace = ScatterTrace.builder(x, y)
+                .text(labels)
+                .build();
+
+        Plot.show(new Figure(trace));
+
     }
 
     public static void fillArray(int[] arr, Supplier<Integer> s) {
