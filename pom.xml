@@ -37,7 +37,7 @@
     </dependencies>
 
     <properties>
-        <maven.compiler.release>11</maven.compiler.release>
+        <maven.compiler.release>19</maven.compiler.release>
     </properties>
 
     <build>
