@@ -1,7 +1,7 @@
 ### IntelliJ IDEA ###
 original/venv/
 out/
-target/
+!target/
 !**/src/main/**/out/
 !**/src/test/**/out/
 TradingStrategies.iml
@@ -33,3 +33,4 @@ bin/
 
 ### Plotting Lib ##
 testoutput/
+/target/
