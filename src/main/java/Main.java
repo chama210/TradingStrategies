@@ -4,6 +4,9 @@ import org.slf4j.LoggerFactory;
 import tech.tablesaw.api.DoubleColumn;
 import tech.tablesaw.api.IntColumn;
 import tech.tablesaw.api.Table;
+import tech.tablesaw.plotly.Plot;
+import tech.tablesaw.plotly.components.Figure;
+import tech.tablesaw.plotly.traces.ScatterTrace;
 
 import java.io.IOException;
 import java.util.Random;
