@@ -1,16 +1,12 @@
 
+import com.trading.data.AlphaVantageDataProvider;
 import com.trading.data.PolygonDataProvider;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import tech.tablesaw.api.DoubleColumn;
-import tech.tablesaw.api.IntColumn;
 import tech.tablesaw.api.Table;
-import tech.tablesaw.plotly.Plot;
-import tech.tablesaw.plotly.components.Figure;
-import tech.tablesaw.plotly.traces.ScatterTrace;
 
 import javax.net.ssl.SSLContext;
 import java.io.IOException;
@@ -44,20 +40,20 @@ public class Main {
 //        // LOGGER.info("loaded prop: " + System.getProperty("alpha_vantage.api-key"));
 
         // System.out.println(new String(new URL("http://www.google.com").openStream().readAllBytes()));
-        OkHttpClient client = new OkHttpClient();
-        System.out.println(client.dns());
-        Request req = new Request.Builder().get().url("https://www.google.com").build();
-        Response res = client.newCall(req).execute();
-        System.out.println(res.body());
-        // AlphaVantageDataProvider pdp = new AlphaVantageDataProvider();
-        //Table t = pdp.get(null, "aapl");
-        //LOGGER.info("\n" + t.printAll());
+//        OkHttpClient client = new OkHttpClient();
+//        System.out.println(client.dns());
+//        Request req = new Request.Builder().get().url("https://www.google.com").build();
+//        Response res = client.newCall(req).execute();
+//        System.out.println(res.body());
+        AlphaVantageDataProvider pdp = new AlphaVantageDataProvider();
+        Table t = pdp.get(null, "aapl");
+        LOGGER.info("\n" + t.printAll());
     }
 
     public static void loadProperties(String src) throws IOException {
         Properties props = new Properties();
         props.load(ClassLoader.getSystemResource(src).openStream());
-        System.setProperties(props);
+        props.forEach((k, v) -> System.setProperty(String.valueOf(k), String.valueOf(v)));
     }
 
 //    public static void main(String[] args) throws IOException {

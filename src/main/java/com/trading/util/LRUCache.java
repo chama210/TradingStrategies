@@ -5,8 +5,8 @@ import java.util.*;
 public class LRUCache<T> {
 
     private int capacity;
-    private Hashtable<String, T> store;
-    private Queue<String> cache;
+    private final Hashtable<String, T> store;
+    private final Queue<String> cache;
 
     public LRUCache() {
         this(256);
