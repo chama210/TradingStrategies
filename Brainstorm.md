@@ -19,8 +19,6 @@ Notes:
 1. For information on quantitative trading see [this](https://www.investopedia.com/terms/q/quantitative-trading.asp)
 2. For information on stock analysis see [this](https://www.investopedia.com/terms/s/stock-analysis.asp)
 
-
-
 # Approach
 
 User Stories

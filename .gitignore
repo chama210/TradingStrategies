@@ -34,3 +34,6 @@ bin/
 ### Plotting Lib ##
 testoutput/
 /target/
+
+### Secrets ###
+/src/main/resources/secrets.properties
