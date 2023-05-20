@@ -1,42 +1,31 @@
 package com.trading.data;
 
-import com.crazzyghost.alphavantage.AlphaVantage;
-import com.crazzyghost.alphavantage.Config;
-import com.crazzyghost.alphavantage.parameters.OutputSize;
-import com.crazzyghost.alphavantage.timeseries.response.TimeSeriesResponse;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import tech.tablesaw.api.Table;
+
+import java.io.IOException;
 
 public class AlphaVantageDataProvider implements StockDataProvider {
 
-    private Config config;
-
-
+    private static final String BASE_URL = "https://www.alphavantage.co/query?";
+    private final String apikey;
+    private final OkHttpClient client;
     public AlphaVantageDataProvider() {
         this(System.getProperty("alpha_vantage.api-key"));
     }
     public AlphaVantageDataProvider(String apikey) {
-        config = Config.builder()
-                .key(apikey)
-                .timeOut(15)
-                .build();
-        AlphaVantage.api().init(config);
+        this.apikey = apikey;
+        client = new OkHttpClient();
     }
 
     @Override
-    public Table get(RequestOptions options, String ticker) {
-        TimeSeriesResponse resp =  AlphaVantage.api()
-                .timeSeries()
-                .daily()
-                .adjusted()
-                .forSymbol("aapl")
-                .outputSize(OutputSize.FULL)
-                .fetchSync();
-        resp.getStockUnits().forEach(System.out::println);
-        return null;
-    }
-
-    @Override
-    public Table get(RequestOptions options, String... ticker) {
-        return null;
+    public Table get(RequestParameters parameters) throws IOException {
+        String url = parameters.addParameter("apikey", apikey).join();
+        Request req = new Request.Builder().url(url).build();
+        try (Response resp = client.newCall(req).execute()) {
+            return Table.read().csv(resp.body().string());
+        }
     }
 }
