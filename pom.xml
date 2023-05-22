@@ -17,23 +17,29 @@
 
     <dependencies>
         <!-- Project Dependencies -->
-        <dependency>
-            <groupId>tech.tablesaw</groupId>
-            <artifactId>tablesaw-core</artifactId>
-            <version>0.43.1</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>tech.tablesaw</groupId>-->
+<!--            <artifactId>tablesaw-core</artifactId>-->
+<!--            <version>0.43.1</version>-->
+<!--        </dependency>-->
 
-        <dependency>
-            <groupId>tech.tablesaw</groupId>
-            <artifactId>tablesaw-json</artifactId>
-            <version>0.43.1</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>tech.tablesaw</groupId>-->
+<!--            <artifactId>tablesaw-json</artifactId>-->
+<!--            <version>0.43.1</version>-->
+<!--        </dependency>-->
 
-        <dependency>
-            <groupId>tech.tablesaw</groupId>
-            <artifactId>tablesaw-jsplot</artifactId>
-            <version>0.43.1</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>sh.joinery</groupId>-->
+<!--            <artifactId>joinery-dataframe</artifactId>-->
+<!--            <version>1.10</version>-->
+<!--        </dependency>-->
+
+<!--        <dependency>-->
+<!--            <groupId>tech.tablesaw</groupId>-->
+<!--            <artifactId>tablesaw-jsplot</artifactId>-->
+<!--            <version>0.43.1</version>-->
+<!--        </dependency>-->
 
         <dependency>
             <groupId>com.squareup.okhttp3</groupId>

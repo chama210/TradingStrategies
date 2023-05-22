@@ -16,12 +16,12 @@ public class RequestParameters {
     }
 
     public String join() {
-        return parameters
-                .entrySet()
-                .stream()
-                .map("%s=%s"::formatted)
-                .collect(Collectors.joining("&"));
-        // return parameters.reduce(4, "%s=%s"::formatted, "%s&%s"::formatted);
+//        return parameters
+//                .entrySet()
+//                .stream()
+//                .map("%s=%s"::formatted)
+//                .collect(Collectors.joining("&"));
+        return parameters.reduce(4, "%s=%s"::formatted, "%s&%s"::formatted);
     }
 
 }

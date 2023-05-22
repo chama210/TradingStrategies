@@ -78,7 +78,7 @@ There are many apis available for stock/trading data, below is a list of some
 that are under consideration:
 1. [Polygon.io](https://polygon.io/docs/stocks/getting-started)
    1. Does not support time series data, but allows request for data
-on a stock for a specific day.
+on a stock for a specific day. // paid for starter plan
 2. [Alpha Vantage](https://www.alphavantage.co/documentation/)
    1. Clearly indicates support for adjusted and non-adjusted stock data.
    2. Provides Java APIs
