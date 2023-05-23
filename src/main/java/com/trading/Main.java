@@ -47,13 +47,13 @@ public class Main {
 //        System.out.println(t.printAll());
 
         Dataframe df = new Dataframe("Test");
-        df.addCol("a");
-        df.addCol("b");
-        df.addCol("c");
-        df.addCol("d");
-        df.addRow(List.of(1, 2, 3, 4));
-        df.addRow(List.of(2, 3, 4, 5));
-        System.out.println(df);
+        df.addCol("a", List.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15));
+        df.addCol("b", List.of(2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16));
+        df.addCol("c", List.of("", "null", "null", "null",
+                "null", "null", "null", "null", "null", "null", "null", "null", "null", "null", "haldjfajdljflkajdlfadh"));
+        System.out.println(df.summarizeCol("a", (a, b) -> (Integer)a + (Integer)b));
+
+        System.out.println(df.toString(false, true));
     }
 
     public static void loadProperties(String src) throws IOException {

@@ -1,6 +1,9 @@
 package com.trading.data.frame;
 
 import java.util.*;
+import java.util.function.BiFunction;
+import java.util.function.BinaryOperator;
+import java.util.function.Function;
 
 public class Dataframe {
 
@@ -22,6 +25,15 @@ public class Dataframe {
 
     public boolean addRow(List<Object> row) {
         return insertRow(rowCount, row);
+    }
+
+    public List<Object> getRow(int idx) {
+        List<Object> objs = new LinkedList<>();
+        for (String s : cols.keySet()) {
+            Object v = cols.get(s).get(idx);
+            objs.add(v);
+        }
+        return objs;
     }
 
     public boolean insertRow(int pos, List<Object> row) {
@@ -76,6 +88,26 @@ public class Dataframe {
         return true;
     }
 
+    public List<Object> getCol(String name) {
+        return List.copyOf(cols.get(name));
+    }
+
+    public void mapCol(String name, Function<Object, Object> mapper) {
+        Objects.requireNonNull(name);
+        Objects.requireNonNull(mapper);
+        if (!cols.containsKey(name))
+            throw new IllegalArgumentException("Column %s does not exist in the table".formatted(name));
+        cols.put(name, cols.get(name).stream().map(mapper).toList());
+    }
+
+    public Optional<Object> summarizeCol(String name, BinaryOperator<Object> accumulator) {
+        Objects.requireNonNull(name);
+        Objects.requireNonNull(accumulator);
+        if (!cols.containsKey(name))
+            throw new IllegalArgumentException("Column %s does not exist in the table".formatted(name));
+       return cols.get(name).stream().reduce(accumulator);
+    }
+
     public boolean removeCol(String name) {
         if (!cols.containsKey(name)) return false;
         cols.remove(name);
@@ -90,7 +122,13 @@ public class Dataframe {
         return this.name;
     }
 
-    @Override public String toString() {
+    @Override
+    public String toString() {
+        return toString(true, false);
+    }
+
+    public String toString(boolean full, boolean includeRowNumbers) {
+        if (rowCount < 10) full = true;
 
         // Preprocess to determine table widths.
         int[] widths = new int[colCount];
@@ -117,10 +155,24 @@ public class Dataframe {
                 .append(toStringHeader(widths))
                 .append(horizontalRule(widths));
 
-        for (int j = 0; j < rowCount; j++) {
-            sb.append(toStringRow(j, widths))
-                    .append(horizontalRule(widths));
+        if (full) {
+            for (int j = 0; j < rowCount; j++) {
+                sb.append(toStringRow(j, widths))
+                        .append(horizontalRule(widths));
+            }
+        } else {
+            for (int j = 0; j < 5; j++) {
+                sb.append(toStringRow(j, widths))
+                        .append(horizontalRule(widths));
+            }
+            sb.append((pad(".", twidth)+"\n").repeat(3));
+            for (int j = 5; j > 0; j--) {
+                sb.append(toStringRow(rowCount-j, widths))
+                        .append(horizontalRule(widths));
+            }
+
         }
+
 
         return sb.toString();
     }
