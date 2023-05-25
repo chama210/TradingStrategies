@@ -1,19 +1,17 @@
 package com.trading;
 
-// import com.trading.data.PolygonDataProvider;
+import com.trading.data.PolygonDataProvider;
 import com.trading.data.frame.Dataframe;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-// import tech.tablesaw.api.Table;
 
+import javax.xml.stream.events.DTD;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
-import java.time.Instant;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
-import java.util.Scanner;
-
 
 public class Main {
     static Logger LOGGER = LoggerFactory.getLogger(Main.class);
@@ -36,24 +34,23 @@ public class Main {
 //            }
 //        }
 
-//        PolygonDataProvider pdp = new PolygonDataProvider();
-//        Table t = pdp.getDaily("AAPL","2023-05-19");
-//        System.out.println(t.printAll());
-////
-////        System.out.println();
-//        System.out.println();
+        PolygonDataProvider pdp = new PolygonDataProvider();
+        Dataframe t = pdp.getDaily("AAPL","2023-05-19");
+        System.out.println(t);
+        System.out.println();
+        System.out.println();
+
+        t = pdp.getHistorical("AAPL","2023-05-01", "2023-05-19");
+        System.out.println(t);
+
+//        Dataframe df = new Dataframe("Test");
+//        df.addCol("a", List.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15));
+//        df.addCol("b", List.of(2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16));
+//        df.addCol("c", List.of("", "null", "null", "null",
+//                "null", "null", "null", "null", "null", "null", "null", "null", "null", "null", "haldjfajdljflkajdlfadh"));
+//        System.out.println(df.summarizeCol("a", (a, b) -> (Integer)a + (Integer)b));
 //
-//         t = pdp.getHistorical("AAPL","2023-05-01", "2023-05-19");
-//        System.out.println(t.printAll());
-
-        Dataframe df = new Dataframe("Test");
-        df.addCol("a", List.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15));
-        df.addCol("b", List.of(2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16));
-        df.addCol("c", List.of("", "null", "null", "null",
-                "null", "null", "null", "null", "null", "null", "null", "null", "null", "null", "haldjfajdljflkajdlfadh"));
-        System.out.println(df.summarizeCol("a", (a, b) -> (Integer)a + (Integer)b));
-
-        System.out.println(df.toString(false, true));
+//        System.out.println(df.toString(false, true));
     }
 
     public static void loadProperties(String src) throws IOException {

@@ -1,11 +1,10 @@
 package com.trading.data.frame;
 
 import java.util.*;
-import java.util.function.BiFunction;
 import java.util.function.BinaryOperator;
 import java.util.function.Function;
 
-public class Dataframe {
+public class Dataframe  {
 
     private String name;
     private final LinkedHashMap<String, List<Object>> cols;
@@ -21,6 +20,55 @@ public class Dataframe {
     public Dataframe(String name) {
         this();
         this.name = name;
+    }
+
+    public static Dataframe fromCSV(String name, String cont) {
+        Objects.requireNonNull(cont);
+
+        String[] lines = cont.split("\n");
+        ArrayList<String> colNames = new ArrayList<>(Arrays.asList(lines[0].split(",")));
+
+        ArrayList<ArrayList<Object>> cols = new ArrayList<>();
+        for (int i = 0; i < colNames.size(); i++) cols.add(new ArrayList<>());
+
+        for (int i = 1; i < lines.length; i++) {
+            String[] row = lines[i].split(",");
+            for (int j = 0; j < row.length; j++) cols.get(j).add(row[j]);
+        }
+
+        Dataframe df = new Dataframe(name);
+        for (int i = 0; i < colNames.size(); i++) df.addCol(colNames.get(i), cols.get(i));
+
+        return df;
+    }
+
+    public static Dataframe merge(String name, Dataframe df1, Dataframe df2) {
+        if (Objects.isNull(df1)) return df2;
+        if (Objects.isNull(df2)) return df1;
+
+        Dataframe newDf = new Dataframe(name);
+        for (String col: df1.cols.keySet()) {
+            newDf.addCol(col, mergeCol(col, df1, df2, false));
+        }
+        for (String col: df2.cols.keySet()) {
+            newDf.addCol(col, mergeCol(col, df2, df1, true));
+        }
+
+        return newDf;
+    }
+
+    private static List<Object> mergeCol(String name, Dataframe frame1, Dataframe frame2, boolean fillFront) {
+        List<Object> frame1Col = frame1.getCol(name);
+        if (frame2.containsCol(name)) {
+            frame1Col.addAll(frame2.getCol(name));
+        } else {
+            fillListNull(frame1Col, frame2.rowCount, fillFront);
+        }
+        return frame1Col;
+    }
+
+    private static <T> void fillListNull(List<T> ls, int amount, boolean fillFront) {
+        for (int i = 0; i < amount; i++) ls.add(fillFront ? 0 : ls.size(), null);
     }
 
     public boolean addRow(List<Object> row) {
@@ -69,6 +117,8 @@ public class Dataframe {
 
         if (Objects.isNull(vals)) {
             vals = new ArrayList<>();
+        } else {
+            vals = new ArrayList<>(vals);
         }
 
         while (vals.size() < rowCount) {
@@ -88,8 +138,12 @@ public class Dataframe {
         return true;
     }
 
+    public boolean containsCol(String name) {
+        return this.cols.containsKey(name);
+    }
+
     public List<Object> getCol(String name) {
-        return List.copyOf(cols.get(name));
+        return new ArrayList<>(cols.get(name));
     }
 
     public void mapCol(String name, Function<Object, Object> mapper) {
