@@ -4,12 +4,15 @@ import com.trading.data.frame.Dataframe;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public class PolygonDataProvider {
+public class PolygonDataProvider implements StockDataProvider {
+    public static final Logger LOGGER = LoggerFactory.getLogger(PolygonDataProvider.class);
     private static final String BASE_URL = "https://api.polygon.io";
 
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -43,7 +46,7 @@ public class PolygonDataProvider {
     public Dataframe getDaily(String ticker, String date) throws IOException {
         String url = BASE_URL +
                 "/v1/open-close/" +
-                ticker +
+                ticker.toUpperCase() +
                 '/' +
                 date +
                 '?';
@@ -64,6 +67,7 @@ public class PolygonDataProvider {
                 String resBody = res.body().string();
                 return Dataframe.fromCSV(ticker, resBody);
             } else {
+                LOGGER.warn("Request to url (%s) failed with response: %s".formatted(url, res.body().string()));
                 return null;
             }
         }
